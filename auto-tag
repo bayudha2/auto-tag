@@ -1,11 +1,12 @@
 #!/bin/bash
 
-usageWithReplace() { echo "Usage with (replace or -r): $0 [-d <delete tag (string)>] [-c <create tag (string)>]" 1>&2; exit 1; }
-usageWithoutReplace() { echo "Usage without (replace or -r): $0 [-c <create tag (string)>]" 1>&2; exit 1; }
+usage() { echo "Usage: $0 [-d <delete tag (string)>] [-c <create tag (string)>]" 1>&2; exit 1; }
 
 replace_tag='false'
+delete_tag=''
+create_tag=''
 
-while getopts ":d:c:r" o; do
+while getopts ":d:c:" o; do
     case "${o}" in
         d)
             delete_tag=${OPTARG}
@@ -13,13 +14,9 @@ while getopts ":d:c:r" o; do
         c)
             create_tag=${OPTARG}
             ;;
-        r)  
-            replace_tag="true"
-            ;;
         *)
             echo ""
-            usageWithReplace
-            usageWithoutReplace
+            usage
             ;;
     esac
 done
@@ -41,18 +38,16 @@ deleteTag() {
     echo ""
 }
 
-if ${replace_tag}; then
-    if [ -z "${delete_tag}" ] || [ -z "${create_tag}" ]; then
-        usageWithReplace
-    fi
 
+if [ "${delete_tag}" != "" ]; then
     deleteTag
-    createTag
+fi
 
-else
-    if [ -z "${create_tag}" ]; then
-        usageWithoutReplace
-    fi
-
+if [ "${create_tag}" != "" ]; then
     createTag
 fi
+
+if [ "${delete_tag}" == "" ] && [ "${create_tag}" == "" ]; then
+    usage
+fi
+
