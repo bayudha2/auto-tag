@@ -2,8 +2,8 @@
 #### _Auto tagging git_
 
 ## Features
-- replace tag on current active branch/commit and push into remote repository
-- create tag on current active branch/commit
+- remove tag and create tag on current active branch/commit and push into remote repository
+- create tag on current active branch/commit and push into remote repository
 
 And of course Auto tag itself is open source with a [public repository][auttag]
  on GitHub.
