@@ -1,0 +1,58 @@
+#!/bin/bash
+
+usageWithReplace() { echo "Usage with (replace or -r): $0 [-d <delete tag (string)>] [-c <create tag (string)>]" 1>&2; exit 1; }
+usageWithoutReplace() { echo "Usage without (replace or -r): $0 [-c <create tag (string)>]" 1>&2; exit 1; }
+
+replace_tag='false'
+
+while getopts ":d:c:r" o; do
+    case "${o}" in
+        d)
+            delete_tag=${OPTARG}
+            ;;
+        c)
+            create_tag=${OPTARG}
+            ;;
+        r)  
+            replace_tag="true"
+            ;;
+        *)
+            echo ""
+            usageWithReplace
+            usageWithoutReplace
+            ;;
+    esac
+done
+
+shift $((OPTIND-1))
+
+createTag() {
+    echo "tag to create ${create_tag}"
+    git tag ${create_tag}
+    git push origin ${create_tag}
+    echo ""
+
+}
+
+deleteTag() {
+    echo "tag to delete: ${delete_tag}"
+    git tag -d ${delete_tag}
+    git push origin -d ${delete_tag}
+    echo ""
+}
+
+if ${replace_tag}; then
+    if [ -z "${delete_tag}" ] || [ -z "${create_tag}" ]; then
+        usageWithReplace
+    fi
+
+    deleteTag
+    createTag
+
+else
+    if [ -z "${create_tag}" ]; then
+        usageWithoutReplace
+    fi
+
+    createTag
+fi
