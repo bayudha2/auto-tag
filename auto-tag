@@ -1,6 +1,6 @@
 #!/bin/bash
 
-usage() { echo "Usage: $0 [-d <delete tag (string)>] [-c <create tag (string)>]" 1>&2; exit 1; }
+usage() { echo "Usage: $0 [-d <delete tag (string/s(separate with comma))>] [-c <create tag (string/s(separate with comma))>]" 1>&2; exit 1; }
 
 replace_tag='false'
 delete_tag=''

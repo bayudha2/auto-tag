@@ -15,10 +15,24 @@ how to delete tagging
 ```sh
 auto-tag -d tag_to_delete
 ```
+example
+```sh
+auto-tag -d v1.0.0
+```
+```sh
+auto-tag -d v1.0.0,v2.0.0,v3.0.0
+```
 
 how to create tagging
 ```sh
 auto-tag -c tag_to_create
+```
+example
+```sh
+auto-tag -c v4.0.0
+```
+```sh
+auto-tag -c v4.0.0,v5.0.0,v6.0.0
 ```
 
 ## License
