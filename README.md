@@ -3,6 +3,9 @@
 
 ## Features
 - create tag on current active branch/commit and push into remote repository
+- create tag on spesific commit id and push into remote repository
+- create multiple tag and push into remote repository
+- delete multiple tag and push into remote repository
 - delete tag and push into remote repository
 
 And of course Auto tag itself is open source with a [public repository][auttag]
@@ -33,6 +36,15 @@ auto-tag -c v4.0.0
 ```
 ```sh
 auto-tag -c v4.0.0,v5.0.0,v6.0.0
+```
+
+how to create tagging at spesific commit id
+```sh
+auto-tag -c tag_to_create -s commit_id
+```
+example
+```sh
+auto-tag -c v4.0.0 -s e3afd034
 ```
 
 ## License

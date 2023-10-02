@@ -5,14 +5,18 @@ usage() { echo "Usage: $0 [-d <delete tag (string/s(separate with comma))>] [-c 
 replace_tag='false'
 delete_tag=''
 create_tag=''
+commit_id=''
 
-while getopts ":d:c:" o; do
+while getopts ":d:c:s:" o; do
     case "${o}" in
         d)
             delete_tag=${OPTARG}
             ;;
         c)
             create_tag=${OPTARG}
+            ;;
+        s)
+            commit_id=${OPTARG}
             ;;
         *)
             echo ""
@@ -30,10 +34,18 @@ createTag() {
     for val in "${tags[@]}";
     do
         echo "tag to create ${val}"
-        git tag ${val}
-        git push origin ${val}
     done
     echo ""
+    
+    read -p 'create tag?(y/yes)' userInput
+    
+    if [[ $userInput == "yes" || $userInput == "y" ]]; then
+        for val in "${tags[@]}";
+        do
+            git tag ${val}
+            git push origin ${val}
+        done
+    fi
 }
 
 deleteTag() {
@@ -43,9 +55,35 @@ deleteTag() {
     for val in "${tags[@]}";
     do
         echo "tag to delete ${val}"
-        git tag -d ${val}
-        git push origin -d ${val}
     done
+    echo ""
+    
+    read -p 'delete tag?(y/yes)' userInput
+    if [[ $userInput == "yes" || $userInput == "y" ]]; then
+        for val in "${tags[@]}";
+        do
+            git tag -d ${val}
+            git push origin -d ${val}
+        done
+    fi
+    
+    echo ""
+}
+
+createSpesificTag() {
+    if [[ $create_tag == *","* ]]; then
+        echo "create tag must be one string without comma(,)"
+        exit 1;
+    fi
+
+    echo "tag to create: ${create_tag} at commit id: ${commit_id}"
+        echo ""
+    
+    read -p 'create spesific tag?(y/yes)' userInput
+    if [[ $userInput == "yes" || $userInput == "y" ]]; then
+        git tag -a ${create_tag} ${commit_id}
+        git push origin ${create_tag}
+    fi   
     echo ""
 }
 
@@ -54,7 +92,9 @@ if [ "${delete_tag}" != "" ]; then
     deleteTag
 fi
 
-if [ "${create_tag}" != "" ]; then
+if [[ "${create_tag}" != "" && "${commit_id}" != "" ]]; then
+    createSpesificTag
+elif [ "${create_tag}" != "" ]; then
     createTag
 fi
 
