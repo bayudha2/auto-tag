@@ -14,7 +14,7 @@ And of course Auto tag itself is open source with a [public repository][auttag]
 ## Usage
 To use `auto-tag`, you working directory have to be in active repo with `git` in it.
 
-how to delete tagging
+#### how to delete tagging
 ```sh
 auto-tag -d tag_to_delete
 ```
@@ -26,7 +26,7 @@ auto-tag -d v1.0.0
 auto-tag -d v1.0.0,v2.0.0,v3.0.0
 ```
 
-how to create tagging
+#### how to create tagging
 ```sh
 auto-tag -c tag_to_create
 ```
@@ -38,7 +38,7 @@ auto-tag -c v4.0.0
 auto-tag -c v4.0.0,v5.0.0,v6.0.0
 ```
 
-how to create tagging at spesific commit id
+#### how to create tagging at spesific commit id
 ```sh
 auto-tag -c tag_to_create -s commit_id
 ```
