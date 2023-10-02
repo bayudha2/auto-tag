@@ -24,17 +24,28 @@ done
 shift $((OPTIND-1))
 
 createTag() {
-    echo "tag to create ${create_tag}"
-    git tag ${create_tag}
-    git push origin ${create_tag}
-    echo ""
+    IFS=','
+    read -a tags <<< "$create_tag"
 
+    for val in "${tags[@]}";
+    do
+        echo "tag to create ${val}"
+        git tag ${val}
+        git push origin ${val}
+    done
+    echo ""
 }
 
 deleteTag() {
-    echo "tag to delete: ${delete_tag}"
-    git tag -d ${delete_tag}
-    git push origin -d ${delete_tag}
+    IFS=','
+    read -a tags <<< "$delete_tag"
+
+    for val in "${tags[@]}";
+    do
+        echo "tag to delete ${val}"
+        git tag -d ${val}
+        git push origin -d ${val}
+    done
     echo ""
 }
 
